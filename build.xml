@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." default="build" name="UserRegistration">
+<project basedir="." default="war" name="UserRegistration">
     <property environment="env"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
@@ -74,25 +74,13 @@
             <classpath refid="UserRegistration.classpath"/>
         </javac>
     </target>
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-              	<target name="war" description="Bundles the application as a WAR file" depends="clean, build">
-              		<!--<mkdir dir="WebContent/WEB-INF/classes"/>
-              	     
-              	    <copy includeemptydirs="false" todir="WebContent/WEB-INF/classes">
-              	            <fileset dir="build/classes">
-              	            <include name="**/*.class"/>
-              	            </fileset>
-              	    </copy>
-              	     
-              	    <war destfile="UserRegistration.war"
-              	        basedir="WebContent"
-              	        needxmlfile="false">
-              	    </war>-->
-              		<echo message="making war"/>
-              		<war destfile="UserRegistration.war" webxml="WebContent/WEB-INF/web.xml">
-              					<fileset dir="WebContent"/>
-              					<lib dir="WebContent/WEB-INF/lib"/>
-              					<classes dir="build/classes"/>
-              		</war>
+    
+    <target name="war" description="Bundles the application as a WAR file" depends="clean, build">
+            <echo message="making war"/>
+            <war destfile="UserRegistration.war" webxml="WebContent/WEB-INF/web.xml">
+              	<fileset dir="WebContent"/>
+              	<lib dir="WebContent/WEB-INF/lib"/>
+              	<classes dir="build/classes"/>
+             </war>
     </target>         	
 </project>
