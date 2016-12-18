@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+   version="2.5">
+
+  <display-name>Welcome to Tomcat</display-name>
+  <description>
+     Welcome to Tomcat
+  </description>
+ <servlet>
+  <servlet-name>servletrecord</servlet-name>
+  <servlet-class>ServletRecord</servlet-class>
+ </servlet>
+ <servlet-mapping>
+ <servlet-name>servletrecord</servlet-name>
+ <url-pattern>/servletRecord</url-pattern>
+ </servlet-mapping>
+
+  <servlet>
+  <servlet-name>adduser</servlet-name>
+  <servlet-class>AddUser</servlet-class>
+ </servlet>
+ <servlet-mapping>
+ <servlet-name>adduser</servlet-name>
+ <url-pattern>/addUser</url-pattern>
+ </servlet-mapping>
+
+
+ <servlet>
+  <servlet-name>editservlet</servlet-name>
+  <servlet-class>UserServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+ <servlet-name>editservlet</servlet-name>
+ <url-pattern>/editServlet/*</url-pattern>
+ </servlet-mapping>
+
+
+ <servlet>
+  <servlet-name>edituser</servlet-name>
+  <servlet-class>EditUser</servlet-class>
+ </servlet>
+ <servlet-mapping>
+ <servlet-name>edituser</servlet-name>
+ <url-pattern>/editUser</url-pattern>
+ </servlet-mapping>
+
+  <servlet>
+  <servlet-name>deleteuser</servlet-name>
+  <servlet-class>DeleteUser</servlet-class>
+ </servlet>
+ <servlet-mapping>
+ <servlet-name>deleteuser</servlet-name>
+ <url-pattern>/deleteUser/*</url-pattern>
+ </servlet-mapping>
+
+</web-app>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns:jacoco="antlib:org.jacoco.ant" default="clean" name="Report builder">
+
+<property name="src.dir" location="./src"/>
+
+<property name="result.dir" location="C:/Softwares/JacocoResult"/>
+
+<property name="result.classes.dir" location="C:/Softwares/wellsfargo/UserRegistration/build/classes"/>
+<property name="result.exec.file" location="${result.dir}/jacoco.exec"/>
+<property name="result.report.dir" location="${result.dir}/result"/>
+ <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="Web App Libraries.libraryclasspath">
+        <pathelement location="WebContent/WEB-INF/lib/commons-lang-2.6.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/commons-logging-1.2.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/hsqldb-2.3.2.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/jackcess-2.1.5.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/ucanaccess-3.0.7.jar"/>
+        <pathelement location="WebContent/WEB-INF/classes"/>
+    </path>
+    <path id="EAR Libraries.libraryclasspath"/>
+    <path id="Apache Tomcat v8.0 [Apache Tomcat v8.0].libraryclasspath">
+        <pathelement location="../../apache-tomcat-8.0.28/lib/annotations-api.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/catalina-ant.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/catalina-ha.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/catalina-storeconfig.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/catalina-tribes.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/catalina.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/ecj-4.4.2.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/el-api.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/jasper-el.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/jasper.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/jsp-api.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/servlet-api.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-api.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-coyote.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-dbcp.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-i18n-es.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-i18n-fr.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-i18n-ja.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-jdbc.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-jni.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-util-scan.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-util.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-websocket.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/websocket-api.jar"/>
+    </path>
+    <path id="UserRegistration.classpath">
+        <pathelement location="build/classes"/>
+        <path refid="Web App Libraries.libraryclasspath"/>
+        <path refid="EAR Libraries.libraryclasspath"/>
+        <path refid="Apache Tomcat v8.0 [Apache Tomcat v8.0].libraryclasspath"/>
+        <pathelement location="lib/commons-lang-2.6.jar"/>
+        <pathelement location="lib/commons-logging-1.2.jar"/>
+        <pathelement location="lib/hsqldb-2.3.2.jar"/>
+        <pathelement location="lib/jackcess-2.1.5.jar"/>
+        <pathelement location="lib/ucanaccess-3.0.7.jar"/>
+    </path>
+   
+<!-- Step 1: Import JaCoCo Ant tasks -->
+
+<target name="init">
+        <mkdir dir="build/classes"/>
+        <copy includeemptydirs="false" todir="build/classes">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <!--  <delete dir="build/classes"/>-->
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="build/classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="UserRegistration.classpath"/>
+        </javac>
+    </target>
+
+<taskdef resource="org/jacoco/ant/antlib.xml" uri="antlib:org.jacoco.ant">
+
+<classpath path="C:/Softwares/jacoco-0.7.7.201606060606lib/jacocoant.jar"/>
+
+</taskdef>
+
+
+
+<target name="report" depends="build">
+
+<!-- Step 3: Create coverage report -->
+
+<mkdir dir="${result.report.dir}"/>
+
+<jacoco:report>
+
+<!-- This task needs the collected execution data and ... -->
+
+
+
+<executiondata>
+
+<file file="${result.exec.file}"/>
+
+</executiondata>
+
+<!-- the class files and optional source files ... -->
+
+
+
+<structure name="JaCoCo Ant Report">
+
+
+<classfiles>
+
+<fileset dir="${result.classes.dir}"/>
+
+</classfiles>
+
+
+<sourcefiles encoding="UTF-8">
+
+<fileset dir="${src.dir}"/>
+
+</sourcefiles>
+
+</structure>
+
+<!-- to produce reports in different formats. -->
+
+
+<html destdir="${result.report.dir}"/>
+
+<csv destfile="${result.report.dir}/report.csv"/>
+
+<xml destfile="${result.report.dir}/report.xml"/>
+
+</jacoco:report>
+
+</target>
+
+<!-- <target name="rebuild" depends="clean,compile,test,report"/>-->
+
+</project>

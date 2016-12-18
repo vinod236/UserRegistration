@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns:jacoco="antlib:org.jacoco.ant" default="junit" name="Report builder">
+
+<property name="build.dir" value="./buildTest" /> 
+<property name="test.dir" location="./test"/>
+<property name="test.src" location="${test.dir}" /> 
+<property name="test.build.dir" location="${build.dir}/test" /> 
+<property name="test.data.dir" location="${test.build.dir}/testResults" /> 
+<property name="reports.dir" location="${test.build.dir}/reports" /> 
+<property name="test.reports.dir" location="${reports.dir}/junit" /> 
+<property name="coverage.reports.dir" location="${reports.dir}/coverage" /> 
+
+<path id="Web App Libraries.libraryclasspath">
+    	 <pathelement location="WebContent/WEB-INF/lib/commons-lang-2.6.jar"/>
+    	 <pathelement location="WebContent/WEB-INF/lib/commons-logging-1.2.jar"/>
+    	 <pathelement location="WebContent/WEB-INF/lib/hsqldb-2.3.2.jar"/>
+    	 <pathelement location="WebContent/WEB-INF/lib/jackcess-2.1.5.jar"/>
+    	 <pathelement location="WebContent/WEB-INF/lib/ucanaccess-3.0.7.jar"/>
+    	 <pathelement location="WebContent/WEB-INF/lib/mockito-all-1.10.19.jar"/>
+    	 <pathelement location="WebContent/WEB-INF/lib/junit.jar"/>
+    	 <pathelement location="WebContent/WEB-INF/lib/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+    	 <pathelement location="WebContent/WEB-INF/classes"/>
+</path>
+    <path id="EAR Libraries.libraryclasspath"/>
+    <path id="Apache Tomcat v8.0 [Apache Tomcat v8.0].libraryclasspath">
+        <pathelement location="../../apache-tomcat-8.0.28/lib/annotations-api.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/catalina-ant.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/catalina-ha.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/catalina-storeconfig.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/catalina-tribes.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/catalina.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/ecj-4.4.2.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/el-api.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/jasper-el.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/jasper.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/jsp-api.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/servlet-api.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-api.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-coyote.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-dbcp.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-i18n-es.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-i18n-fr.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-i18n-ja.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-jdbc.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-jni.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-util-scan.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-util.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/tomcat-websocket.jar"/>
+        <pathelement location="../../apache-tomcat-8.0.28/lib/websocket-api.jar"/>
+    </path>
+    <path id="UserRegistration.classpath">
+        <pathelement location="build/classes"/>
+        <path refid="Web App Libraries.libraryclasspath"/>
+        <path refid="EAR Libraries.libraryclasspath"/>
+        <path refid="Apache Tomcat v8.0 [Apache Tomcat v8.0].libraryclasspath"/>
+        <pathelement location="lib/commons-lang-2.6.jar"/>
+        <pathelement location="lib/commons-logging-1.2.jar"/>
+        <pathelement location="lib/hsqldb-2.3.2.jar"/>
+        <pathelement location="lib/jackcess-2.1.5.jar"/>
+        <pathelement location="lib/ucanaccess-3.0.7.jar"/>
+    	<pathelement location="lib/mockito-all-1.10.19.jar"/>
+    	<pathelement location="lib/junit.jar"/>
+    	<pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+    </path>
+   
+<!-- Step 1: Import JaCoCo Ant tasks -->
+
+<target name="init">
+	<mkdir dir="${build.dir}"/>
+	<mkdir dir="${test.build.dir}"/>
+</target>
+ <target name="clean">
+        <!--  <delete dir="build/classes"/>-->
+ </target>
+ <target depends="clean" name="cleanall"/>
+ <target depends="build-subprojects,build-project" name="build"/>
+ <target name="build-subprojects"/>
+ <target depends="init" name="build-project">
+    <echo message="${ant.project.name}: ${ant.file}"/>
+    <javac destdir="${build.dir}" srcdir="${test.src}" includeantruntime="false">
+            <classpath refid="UserRegistration.classpath"/>
+    </javac>
+ 	<!--<javac destdir="${build.dir}" srcdir="./src" includeantruntime="false">
+ 	            <classpath refid="UserRegistration.classpath"/>
+ 	</javac>
+ 	<fileset id="srcFiles1" dir="./src"> 
+ 	 	<exclude name="**/*.java" /> 
+ 	 	<exclude name="**/*.html" /> 
+ 	 	<exclude name="**/*.xsl" /> 
+ 	 	<include name="**/*.*" /> 
+ 	 </fileset> 
+ 	 <copy todir="${build.dir}"> 
+ 	 		<fileset refid="srcFiles1" /> 
+ 	 </copy>-->
+ 	
+ 	<fileset id="srcFiles" dir="${test.src}"> 
+ 	<exclude name="**/*.java" /> 
+ 	<exclude name="**/*.html" /> 
+ 	<exclude name="**/*.xsl" /> 
+ 	<include name="**/*.*" /> 
+ 	</fileset> 
+ 	<copy todir="${test.build.dir}"> 
+ 		<fileset refid="srcFiles" /> 
+ 	</copy>
+ 	
+ </target>
+
+<taskdef resource="org/jacoco/ant/antlib.xml" uri="antlib:org.jacoco.ant">
+	<classpath path="C:/Softwares/jacoco-0.7.7.201606060606lib/jacocoant.jar"/>
+</taskdef>
+
+
+<property name="xms" value="-Xms256m" /> 
+<property name="xmx" value="-Xmx1024m" /> 
+	
+<target name="junit" depends ="build-project">
+	<mkdir dir="${test.data.dir}" /> 
+	
+	<!-- Run all tests --> 
+	<jacoco:coverage destfile="${test.data.dir}/jacoco.exec"> 
+	<junit printsummary="true" haltonfailure="false" fork="yes" forkmode="once"> 
+	<jvmarg value="${xms}" /> 
+	<jvmarg value="${xmx}" /> 
+	<!-- <jvmarg value="${log4j.config}" /> --> 
+	<classpath refid="UserRegistration.classpath"/>
+	<formatter type="xml" /> 
+	<batchtest todir="${test.data.dir}"> 
+	<fileset dir="${build.dir}"> 
+	<!-- Exclude inner classes 
+	<exclude name="**/*$*.class" /> --> 
+	<include name="**/*.class" /> 
+	</fileset> 
+	</batchtest> 
+	</junit> 
+	</jacoco:coverage> 
+	
+	<!-- Generate HTML report 
+	 			- junit-noframes.html -> Single page HTML-report  
+	 			- index.html -> HTML-report using frames (several files, but more comfortable to read)--> 
+	<junitreport todir="${test.data.dir}"> 
+	 			<fileset dir="${test.data.dir}"> 
+	 				<include name="TEST-*.xml" /> 
+	 			</fileset> 
+				<report styledir="C:/Softwares/apache-ant-1.9.0/etc" format="noframes" todir="${test.reports.dir}" /> 
+	 			<!--<report styledir="C:/Softwares/apache-ant-1.9.0/etc" format="frames" todir="${test.reports.dir}" />--> 
+	 </junitreport> 
+
+	<jacoco:report> 
+	<executiondata> 
+	<file file="${test.data.dir}/jacoco.exec" /> 
+	</executiondata> 
+	<structure name="AntTestReporting"> 
+	<sourcefiles encoding="UTF-8">
+		<fileset dir="${test.dir}"/>
+		<fileset dir="./src"/>
+    </sourcefiles>
+	<classfiles> 
+	<fileset dir="${build.dir}"> 
+		<include name="**/*Test.class" /> 
+	</fileset> 
+	</classfiles> 
+	</structure> 
+	
+	 
+	<html destdir="${coverage.reports.dir}" /> 
+	</jacoco:report> 
+</target>
+
+
+
+</project>

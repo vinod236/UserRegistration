@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="war-task" default="create-war" basedir=".">
+
+    <target name="init" 
+        description="Initializes some properties.">
+
+        <echo message="Initializing properties."/>
+
+        <property name="build" value=".\build" />
+        <property name="src" value=".\src" />
+        <property name="dist" value=".\dist" />
+        <property name="lib" value=".\webContent\WEB-INF\lib" />
+        <property name="web" value=".\webContent\WEB-INF" />
+        <property name="meta" value=".\WebContent\META-INF" />
+        <property name="context-path" value="UserRegistration" />
+
+    </target>
+
+    <target name="prepare" depends="init">
+
+        <echo message=
+          "Cleaning up the build and dist directories."/>
+
+        <delete dir="${build}"/>
+        <mkdir dir="${build}"/>
+        <delete dir="${dist}"/>
+        <mkdir dir="${dist}"/>
+
+    </target><target name="create-war" description=
+     "creates a web application archive file" 
+       depends="prepare">
+
+       <war destfile="${dist}/${context-path}.war" 
+         webxml="${web}/web.xml">
+
+           <classes dir="${build}"/>
+           <lib dir="${lib}"/>
+           <fileset dir="${web}"/>
+       </war>
+    </target>
+
+ </project>
