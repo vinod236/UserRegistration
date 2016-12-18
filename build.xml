@@ -88,6 +88,7 @@
               	        basedir="WebContent"
               	        needxmlfile="false">
               	    </war>-->
+              		<echo message="making war"/>
               		<war destfile="UserRegistration.war" webxml="WebContent/WEB-INF/web.xml">
               					<fileset dir="WebContent"/>
               					<lib dir="WebContent/WEB-INF/lib"/>
