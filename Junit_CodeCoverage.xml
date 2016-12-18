@@ -107,7 +107,7 @@
  </target>
 
 <taskdef resource="org/jacoco/ant/antlib.xml" uri="antlib:org.jacoco.ant">
-	<classpath path="C:/Softwares/jacoco-0.7.7.201606060606lib/jacocoant.jar"/>
+	<classpath path="C:/Softwares/jacoco-0.7.7.201606060606/lib/jacocoant.jar"/>
 </taskdef>
 
 
@@ -138,13 +138,13 @@
 	<!-- Generate HTML report 
 	 			- junit-noframes.html -> Single page HTML-report  
 	 			- index.html -> HTML-report using frames (several files, but more comfortable to read)--> 
-	<junitreport todir="${test.data.dir}"> 
+	<!--<junitreport todir="${test.data.dir}"> 
 	 			<fileset dir="${test.data.dir}"> 
 	 				<include name="TEST-*.xml" /> 
 	 			</fileset> 
 				<report styledir="C:/Softwares/apache-ant-1.9.0/etc" format="noframes" todir="${test.reports.dir}" /> 
-	 			<!--<report styledir="C:/Softwares/apache-ant-1.9.0/etc" format="frames" todir="${test.reports.dir}" />--> 
-	 </junitreport> 
+	 			<report styledir="C:/Softwares/apache-ant-1.9.0/etc" format="frames" todir="${test.reports.dir}" /> 
+	 </junitreport>--> 
 
 	<jacoco:report> 
 	<executiondata> 
