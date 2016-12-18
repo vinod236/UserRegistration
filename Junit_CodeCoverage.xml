@@ -145,7 +145,6 @@
 				<report styledir="C:/Softwares/apache-ant-1.9.0/etc" format="noframes" todir="${test.reports.dir}" /> 
 	 			<report styledir="C:/Softwares/apache-ant-1.9.0/etc" format="frames" todir="${test.reports.dir}" /> 
 	 </junitreport>--> 
-
 	<jacoco:report> 
 	<executiondata> 
 	<file file="${test.data.dir}/jacoco.exec" /> 
